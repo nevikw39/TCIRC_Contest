@@ -1,5 +1,7 @@
 \documentclass[a4paper,10pt]{article}
 
+\usepackage{amsfonts}
+
 \usepackage{xeCJK}
 \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
 \xeCJKsetup{RubberPunctSkip=false}
@@ -76,46 +78,154 @@
 
 \end{abstract}
 
-\section{病毒擴散}
-
-\paragraph{關鍵} 迴圈、（快速冪）
-
-\subsection{參考程式碼}
-
-\subsubsection{C}
-
-\lstinputlisting[language=C]{00_pow/pow.c}
-
-\subsubsection{Python}
-
-\lstinputlisting[language=Python]{00_pow/pow.py}
-
-\section{二次式排版}
+\section{割草}
 
 \paragraph{關鍵} 條件
 
+\subsection{題目}
+
+由於 I4SO 菸粉綠蛆網軍蟑螂及國家機器動得非常厲害，我們先總統　蔣公在世、人類的救星、世界的偉人、自由的燈塔、民族的長城、宇宙的征服者，百年一見的政治鬼才 --- 高譚市長韓總雞，遭遇地球文明史上最大的危機：罷免案。
+
+依據《公職人員選舉罷免法》第 90 條：
+\begin{quote}
+罷免案投票結果，有效同意票數多於不同意票數，且同意票數達原選舉區選舉人總數四分之一以上，即為通過。
+有效罷免票數中，不同意票數多於同意票數或同意票數不足前項規定數額者，均為否決。
+\end{quote}
+
+
+因為高譚市民非常非常多，有可能超過五百萬的五百萬倍，所以想請你幫忙寫個程式判斷罷免通過與否。
+
+\subsubsection{輸入}
+
+三整數 $n, a, b$ 分別代表全體選舉人總數，有效同意、不同意票數。$$0 \leq n < 2^{64}, 4 \times a < n, a + b \leq n$$
+
+\subsubsection{輸出}
+
+首先請就罷免結果，輸出 \texttt{!!666} 或 \texttt{QQ~~}。
+
+接著請輸出「沉默不出來投票的韓粉」之人數。
+
+\subsection{解析}
+
+本題雖然就是個水題，但是有不少陷阱。
+
+首先，由於 $n$ 的範圍 $2^{64}$ ，因此必須使用 \texttt{uint64\_t}。其次，同意票數需大於選舉人總數之四分之一，但須注意 C++ 的除法總是向零取整，假若寫成 \texttt{a >= n / 4} 則會存在誤差。
+
+\subsection{參考程式碼}
+
+\subsubsection{C++}
+
+\lstinputlisting[language=C]{recall/recall.c}
+
+\subsubsection{Python}
+
+\lstinputlisting[language=Python]{recall/recall.py}
+
+\section{病毒擴散 (pow)}
+
+\paragraph{關鍵} 迴圈、（快速冪）
+
+\subsection{題目}
+
+很久很久以前，在遙遠的銀河系…\textit{(A long time ago in a galaxy far far away...)}
+
+多久以前呢？？應該是於「雅汶戰役」前 2087 年 \textit{(2087 BBY)} 吧，在杳無人煙的帝國祕密基地、岩漿星球穆斯塔法\textit{(Mustafar)}發現惹一種冠狀病毒，\textsl{GHO} 銀河衛生組織將之暫時命名為 \textbf{87-nCoV}。
+
+已知這種奇怪的病毒會不斷的自行分裂，現在給你此病毒每次分裂後的個數 $r$，求在 $t$ 個週期後病毒數量會變為原來的幾倍？？
+
+\subsubsection{輸入}
+
+輸入僅有一行，兩個整數 $r, t$ 以空白分隔，分別代表每一病毒每次分裂後的個數及經過多少週期。
+
+\subsubsection{輸出}
+
+輸出最後病毒數量變為原來的幾倍。因為答案或許很大，所以請對 $10^9+7$ 取模。
+
+\subsection{解析}
+
+本題分為兩個小題。
+
+\begin{description}
+    \item[70\%] $r < 1000000000, t < 10$ 在 \texttt{long} 內可以迴圈輕鬆解決。
+    \item[30\%] $r < 1000000000, t < 1000000000$ \texttt{C++} 須自行實做快速冪，\texttt{Python} 若善用內建函式則秒殺。
+\end{description}
+
 \subsection{參考程式碼}
 
 \subsubsection{C}
 
-\lstinputlisting[language=C]{01_polynomial/polynomial.c}
+\lstinputlisting[language=C]{pow/pow.c}
 
 \subsubsection{Python}
 
-\lstinputlisting[language=Python]{01_polynomial/polynomial.py}
+\lstinputlisting[language=Python]{pow/pow.py}
 
-\section{數字朗讀}
+\section{二次曲線美化 (conic)}
+
+\paragraph{關鍵} 迴圈、條件
+
+\subsection{題目}
+
+電電最近學到二次曲線，在電腦上打惹許多二次曲線的一般式 ($ax^2 \pm bxy \pm cy^2 \pm dx \pm ey \pm f; a, b, c, d, e, f \in \mathbb{N}$)。可是寫的時候因為很趕很隨意，導致式子擠在一起很不方便閱讀，因此想請你寫個程式幫他美化重新排版。
+
+排版的規則如下：
+\begin{enumerate}
+ \item 各項必須依照降冪及字典順序出現
+ \item 指數應當出現在 \textit{caret} 字元 `\enspace\textbf{\^}' 後方
+ \item 常數項就只有常數
+ \item 唯具有非零係數的項可以出現，除非每項係數皆為 $0$，則常數項可以出現
+ \item 空格僅在二元運算子 $\mathbf{+}$ ---加--- 和 $\mathbf{-}$ ---減--- 的兩側出現
+ \item 若領導係數為正則毋需性質符號，反之應輸出一負號
+ \item 負項被視為減去正項，首項例外
+ \item 係數 $\pm1$ 只有在常數項出現
+\end{enumerate}
+
+\subsubsection{輸入}
+
+輸入僅有一行，六個整數 $a, b, c, d, e, f$ 以空白分隔，分別代表該二次曲線之各項。
+
+\subsubsection{輸出}
+
+輸出符合規則的二次多項式。
+
+\subsection{解析}
+
+本題是個比較複雜的條件判斷水題，沒有任何技巧，就是需要耐心而已。
+
+\subsection{參考程式碼}
+
+\subsubsection{C}
+
+\lstinputlisting[language=C++]{conic/conic.cpp}
+
+\subsubsection{Python}
+
+\lstinputlisting[language=Python]{conic/conic.py}
+
+\section{數字朗讀 (num)}
 
 \paragraph{關鍵} 迴圈、遞迴
 
+\subsection{題目}
+
+\subsubsection{輸入}
+
+僅有一整數 $n$。
+
+\subsubsection{輸出}
+
+$n$ 在英文的念法。
+
+\subsection{解析}
+
 \subsection{參考程式碼}
 
-\subsubsection{C}
+\subsubsection{C++}
 
-\lstinputlisting[language=C]{02_num/num.cpp}
+\lstinputlisting[language=C++]{num/num.cpp}
 
 \subsubsection{Python}
 
-\lstinputlisting[language=Python]{02_num/num.py}
+\lstinputlisting[language=Python]{num/num.py}
 
 \end{document}
