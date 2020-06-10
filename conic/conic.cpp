@@ -22,9 +22,11 @@ int main()
     if (a[5])
     {
         if (flag)
-            cout << (a[5] > 0 ? " + " : " - ") << (myabs(a[5]) > 1 ? to_string(myabs(a[5])) : "");
+            cout << (a[5] > 0 ? " + " : " - ") << abs(a[5]);
         else
             cout << a[5];
     }
+    else if (!flag)
+        cout << '0';
     return 0;
 }
