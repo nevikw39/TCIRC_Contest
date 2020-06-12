@@ -1,8 +1,10 @@
 #include <stdio.h>
+#include <stdint.h>
+#include <inttypes.h>
 const int M = 1e9 + 7;
-int mulmod(int x, int n)
+uint64_t mulmod(uint64_t x, uint64_t n)
 {
-    int y = 0;
+    uint64_t y = 0;
     while (x)
     {
         if (x & 1)
@@ -12,13 +14,13 @@ int mulmod(int x, int n)
     }
     return y;
 }
-int binexp(int x, int n)
+uint64_t binexp(uint64_t x, uint64_t n)
 {
-    int y = 1;
+    uint64_t y = 1;
     while (n)
     {
         if (n & 1)
-            y = mulmod(y, x); // (y * x) may overflow (if x, y are not long)
+            y = mulmod(y, x); // equal to y = (y * x) % M
         x = mulmod(x, x);     // similarly
         n >>= 1;
     }
@@ -26,8 +28,8 @@ int binexp(int x, int n)
 }
 int main()
 {
-    int r, t;
-    scanf("%d%d", &r, &t);
-    printf("%d\n", binexp(r, t));
+    uint64_t r, t;
+    scanf("%" SCNu64 "%" SCNu64, &r, &t);
+    printf("%" PRIu64 "\n", binexp(r, t));
     return 0;
 }
