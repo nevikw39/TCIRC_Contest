@@ -1,6 +1,7 @@
 \documentclass[a4paper,10pt]{article}
 
 \usepackage{amsfonts}
+\usepackage{amsmath}
 
 \usepackage{xeCJK}
 \xeCJKsetup{CJKglue=\hspace{0pt plus .08 \baselineskip }}
@@ -78,13 +79,49 @@
 
 \end{abstract}
 
-\section{割草}
+\section{旋轉矩陣}
+
+\paragraph{關鍵} GCD, LCM
+
+\subsection{題目}
+
+電電寫數學考卷遇到這麼一題：令一矩陣 $A$ 表一平面上的線性變換 $\begin{pmatrix} \frac{-\sqrt{3}}{2} & \frac{-1}{2}\\ \frac{1}{2} & \frac{-\sqrt{3}}{2} \end{pmatrix}$，試問任一點 $P(x, y)$ 最少須經過多少次此變換後方回到原本的位置。
+
+聰明的電電馬上想到 $A = \begin{pmatrix} \cos 150^{\circ} & -\sin 150^{\circ}\\ \sin 150^{\circ} & \cos 150^{\circ} \end{pmatrix} = R_{150^{\circ}}$ 即一個旋轉 150 度的變換，那麼只要旋轉成「一周角」的倍數就是旋轉一圈相當於沒有變換。因此，你的任務是幫電電計算最少旋轉幾次後回到原本的位置。
+
+不過，電電國的角度單位有很多種，「一周角」並不總是 360 度。
+
+\subsubsection{輸入}
+
+兩個整數 $a, b$ 皆 $< 2^{31}$，分別代表旋轉矩陣的度數及「一周角」的度數。
+
+\subsubsection{輸出}
+
+請輸出最少旋轉幾次後回到原本的位置。
+
+\subsection{解析}
+
+本題怕太水所以故意把題目敘述打很複雜，但是真的是考數學得到的靈感 XDD
+
+很顯然本題所求為 $lcm(a, b) / a = (a * b / gcd(a, b)) / a = b * gcd(a, b)$。
+
+\subsection{參考程式碼}
+
+\subsubsection{C++}
+
+\lstinputlisting[language=C++]{rotate/rotate.cpp}
+
+\subsubsection{Python}
+
+\lstinputlisting[language=Python]{rotate/rotate.py}
+
+\section{割草決戰}
 
 \paragraph{關鍵} 條件
 
 \subsection{題目}
 
-由於 I4SO 菸粉綠蛆網軍蟑螂及國家機器動得非常厲害，我們先總統　蔣公在世、人類的救星、世界的偉人、自由的燈塔、民族的長城、宇宙的征服者，百年一見的政治鬼才 --- 高譚市長韓總雞，遭遇地球文明史上最大的危機：罷免案。
+由於 I4S$\circ$ 菸粉綠蛆韓黑網軍蟑螂及國家機器動得非常厲害，我們先總統　蔣公在世、人類的救星、世界的偉人、自由的燈塔、民族的長城、宇宙的征服者，百年一見的政治鬼才 --- 高譚市長韓總雞，遭遇地球文明史上最大的危機：罷免案。
 
 依據《公職人員選舉罷免法》第 90 條：
 \begin{quote}
