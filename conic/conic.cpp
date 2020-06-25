@@ -22,7 +22,7 @@ int main()
     if (a[5])
     {
         if (flag)
-            cout << (a[5] > 0 ? " + " : " - ") << abs(a[5]);
+            cout << (a[5] > 0 ? " + " : " - ") << myabs(a[5]);
         else
             cout << a[5];
     }
