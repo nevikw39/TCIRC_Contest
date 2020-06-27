@@ -79,40 +79,6 @@
 
 \end{abstract}
 
-\section{遞迴縮寫 (acronym)}
-
-\paragraph{關鍵} string
-
-\subsection{題目}
-
-所謂「遞迴縮寫」是指一組字串的縮寫恰好參照到他本身，例如 \texttt{GNU Not Unix} 的縮寫是 \texttt{GNU} \dots
-
-在資訊社群中，電神們有個慣例是傾向於使用「遞迴縮寫」的命名法來表達他們的幽默。
-
-本題的任務是，請你檢查一組字串是否有可能是關於首字的「遞迴縮寫」。
-
-\subsubsection{輸入}
-
-一些以空白隔開的字串，數量及長度皆小於 25。
-
-\subsubsection{輸出}
-
-如果輸入的字串們可以存在遞迴縮寫，請輸出 \texttt{o\'\_\'o} 否則 \texttt{QQ}。
-
-\subsection{解析}
-
-
-
-\subsection{參考程式碼}
-
-\subsubsection{C++}
-
-\lstinputlisting[language=C++]{acronym/acronym.cpp}
-
-\subsubsection{Python}
-
-\lstinputlisting[language=Python]{acronym/acronym.py}
-
 \section{旋轉矩陣 (rotate)}
 
 \paragraph{關鍵} GCD, LCM
@@ -121,7 +87,7 @@
 
 電電寫數學考卷遇到這麼一題：令一矩陣 $A$ 表一平面上的線性變換 $\begin{pmatrix} \frac{-\sqrt{3}}{2} & \frac{-1}{2}\\ \frac{1}{2} & \frac{-\sqrt{3}}{2} \end{pmatrix}$，試問任一點 $P(x, y)$ 最少須經過多少次此變換後方回到原本的位置。
 
-聰明的電電馬上想到 $A = \begin{pmatrix} \cos 150^{\circ} & -\sin 150^{\circ}\\ \sin 150^{\circ} & \cos 150^{\circ} \end{pmatrix} = R_{150^{\circ}}$ 即一個旋轉 150 度的變換，那麼只要旋轉成「一周角」的倍數就是旋轉一圈相當於沒有變換。因此，你的任務是幫電電計算最少旋轉幾次後回到原本的位置。
+聰明的電電馬上想到 $A = \begin{pmatrix} \cos 150^{\circ} & -\sin 150^{\circ}\\ \sin 150^{\circ} & \cos 150^{\circ} \end{pmatrix} = R_{150^{\circ}}$ 即一個關於原點旋轉 150 度的變換，那麼只要旋轉成「一周角」的倍數就是旋轉一圈相當於沒有變換。電電可以輕鬆地看出矩陣所代表的度數；因此，你的任務是幫電電計算最少旋轉幾次後回到原本的位置。
 
 不過，電電國的角度單位有很多種，「一周角」並不總是 360 度。
 
@@ -138,6 +104,8 @@
 本題怕太水所以故意把題目敘述打很複雜，但是真的是考數學得到的靈感 XDD
 
 很顯然本題所求為 $ \frac{lcm(a, b)}{a} = \frac{\frac{a * b}{gcd(a, b)}}{a} = \frac{b}{gcd(a, b)} $。
+
+C++ 可利用 <algorithm> 中為旋轉演算法提供之 \texttt{__gcd()} 函式。
 
 \subsection{參考程式碼}
 
@@ -168,7 +136,7 @@
 
 \subsubsection{輸入}
 
-三整數 $n, a, b$ 分別代表全體選舉人總數，有效同意、不同意票數。$$0 \leq n < 2^{64}, 4 \times a < n, a + b \leq n$$
+三整數 $n, a, b$ 分別代表全體選舉人總數，有效同意、不同意票數。$$0 \leq n < 2^{64}, a + b \leq n$$
 
 \subsubsection{輸出}
 
@@ -191,6 +159,38 @@
 \subsubsection{Python}
 
 \lstinputlisting[language=Python]{recall/recall.py}
+
+\section{遞迴縮寫 (acronym)}
+
+\paragraph{關鍵} string
+
+\subsection{題目}
+
+所謂「遞迴縮寫」是指一組字串的縮寫恰好參照到他本身，例如 \texttt{GNU Not Unix} 的縮寫是 \texttt{GNU} \dots
+
+在資訊社群中，電神們有個慣例是傾向於使用「遞迴縮寫」的命名法來表達他們的幽默。
+
+本題的任務是，請你檢查一組字串是否有可能是關於首字的「遞迴縮寫」。
+
+\subsubsection{輸入}
+
+一些以空白隔開的字串，數量及長度皆小於 25。
+
+\subsubsection{輸出}
+
+如果輸入的字串們可能存在遞迴縮寫，請輸出 \texttt{o\'\_\'o} 否則 \texttt{QQ}。
+
+\subsection{解析}
+
+\subsection{參考程式碼}
+
+\subsubsection{C++}
+
+\lstinputlisting[language=C++]{acronym/acronym.cpp}
+
+\subsubsection{Python}
+
+\lstinputlisting[language=Python]{acronym/acronym.py}
 
 \section{病毒擴散 (pow)}
 
@@ -242,7 +242,7 @@
 排版的規則如下：
 \begin{enumerate}
  \item 各項必須依照降冪及字典順序出現
- \item 指數應當出現在 \textit{caret} 字元 `\enspace\textbf{\^}' 後方
+ \item 指數應當出現在 \textit{caret} 字元 `\enspace\textbf{\^}' 後方，次數為一時不必表明次數
  \item 常數項就只有常數
  \item 唯具有非零係數的項可以出現，除非每項係數皆為 $0$，則常數項可以出現
  \item 空格僅在二元運算子 $\mathbf{+}$ ---加--- 和 $\mathbf{-}$ ---減--- 的兩側出現
@@ -279,9 +279,11 @@
 
 \subsection{題目}
 
-電電欲令電腦朗讀出數字，他現在已經有英文轉語音 \textit{(TTS)} 的 \textit{API} 
+電電欲令電腦朗讀出數字，他現在已經有英文轉語音 \textit{(TTS)} 的 \textbf{API} 惹。
 
 在英文中與中文不同，差兩次以上的位數並不需要「零」或 ``end'' （比賽結束後你可以請 Google 小姐念給你聽）。此外，正式的寫法如支票，並不會用 ``a hundred'' 等等而應該是 ``one hundred''。
+
+其他英文數字讀法規則都跟你小時候一樣（吧
 
 \subsubsection{輸入}
 
