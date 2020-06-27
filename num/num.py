@@ -11,7 +11,7 @@ def num_to_words(x: int):
     if x < 100:
         return tys[x // 10] + (('-' + digits[x % 10]) if x % 10 else '')
     if x < 1000:
-        return digits[x // 100] + " hundred" + (' ' + num_to_words(x % 100)) if x % 100 else ''
+        return digits[x // 100] + " hundred" + ((' ' + num_to_words(x % 100)) if x % 100 else '')
 
 
 def main():
@@ -19,7 +19,7 @@ def main():
     if not n:
         sys.stdout.buffer.write("zero".encode())
     if n < 0:
-        sys.stdout.buffer.write("minus".encode())
+        sys.stdout.buffer.write("minus ".encode())
         n = -n
     if n >= 1000000000:
         sys.stdout.buffer.write(
