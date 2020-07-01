@@ -79,7 +79,7 @@
 
 \end{abstract}
 
-\section{旋轉矩陣 (rotate)}
+\section{旋轉矩陣 \texttt{(rotate)}}
 
 \paragraph{關鍵} GCD, LCM
 
@@ -87,7 +87,9 @@
 
 電電寫數學考卷遇到這麼一題：令一矩陣 $A$ 表一平面上的線性變換 $\begin{pmatrix} \frac{-\sqrt{3}}{2} & \frac{-1}{2}\\ \frac{1}{2} & \frac{-\sqrt{3}}{2} \end{pmatrix}$，試問任一點 $P(x, y)$ 最少須經過多少次此變換後方回到原本的位置。
 
-聰明的電電馬上想到 $A = \begin{pmatrix} \cos 150^{\circ} & -\sin 150^{\circ}\\ \sin 150^{\circ} & \cos 150^{\circ} \end{pmatrix} = R_{150^{\circ}}$ 即一個關於原點旋轉 150 度的變換，那麼只要旋轉成「一周角」的倍數就是旋轉一圈相當於沒有變換。電電可以輕鬆地看出矩陣所代表的度數；因此，你的任務是幫電電計算最少旋轉幾次後回到原本的位置。
+聰明的電電馬上想到 $A = \begin{pmatrix} \cos 150^{\circ} & -\sin 150^{\circ}\\ \sin 150^{\circ} & \cos 150^{\circ} \end{pmatrix} = R_{150^{\circ}}$ 即一個關於原點逆時針旋轉 150 度的變換，那麼只要旋轉成「一周角」的倍數就是旋轉一圈相當於沒有變換。
+
+電電可以輕鬆地看出矩陣所代表的度數；因此，你的任務是幫電電計算最少旋轉幾次後回到原本的位置。
 
 不過，電電國的角度單位有很多種，「一周角」並不總是 360 度。
 
@@ -105,7 +107,7 @@
 
 很顯然本題所求為 $ \frac{lcm(a, b)}{a} = \frac{\frac{a * b}{gcd(a, b)}}{a} = \frac{b}{gcd(a, b)} $。
 
-C++ 可利用 <algorithm> 中為旋轉演算法提供之 \texttt{__gcd()} 函式。
+C++ 可利用 <algorithm> 中為旋轉演算法提供之 \texttt{\_\_gcd()} 函式。
 
 \subsection{參考程式碼}
 
@@ -191,45 +193,6 @@ C++ 可利用 <algorithm> 中為旋轉演算法提供之 \texttt{__gcd()} 函式
 \subsubsection{Python}
 
 \lstinputlisting[language=Python]{acronym/acronym.py}
-
-\section{病毒擴散 (pow)}
-
-\paragraph{關鍵} 迴圈、（快速冪）
-
-\subsection{題目}
-
-很久很久以前，在遙遠的銀河系…\textit{(A long time ago in a galaxy far far away...)}
-
-多久以前呢？？應該是於「雅汶戰役」前 2087 年 \textit{(2087 BBY)} 吧，在杳無人煙的帝國祕密基地、岩漿星球穆斯塔法\textit{(Mustafar)}發現惹一種冠狀病毒，\textsl{GHO} 銀河衛生組織將之暫時命名為 \textbf{87-nCoV}。
-
-已知這種奇怪的病毒會不斷的自行分裂，現在給你此病毒每次分裂後的個數 $r$，求在 $t$ 個週期後病毒數量會變為原來的幾倍？？
-
-\subsubsection{輸入}
-
-輸入僅有一行，兩個整數 $r, t$ 以空白分隔，分別代表每一病毒每次分裂後的個數及經過多少週期。
-
-\subsubsection{輸出}
-
-輸出最後病毒數量變為原來的幾倍。因為答案或許很大，所以請對 $10^9+7$ 取模。
-
-\subsection{解析}
-
-本題分為兩個小題。
-
-\begin{description}
-    \item[70\%] $r < 1000000000, t < 10$ 在 \texttt{long} 內可以迴圈輕鬆解決。
-    \item[30\%] $r < 1000000000, t < 1000000000$ \texttt{C++} 須自行實做快速冪，\texttt{Python} 若善用內建函式則秒殺。
-\end{description}
-
-\subsection{參考程式碼}
-
-\subsubsection{C}
-
-\lstinputlisting[language=C]{pow/pow.c}
-
-\subsubsection{Python}
-
-\lstinputlisting[language=Python]{pow/pow.py}
 
 \section{二次曲線美化 (conic)}
 
