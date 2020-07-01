@@ -79,7 +79,7 @@
 
 \end{abstract}
 
-\section{旋轉矩陣 \texttt{(rotate)}}
+\section{旋轉矩陣 (rotate)}
 
 \paragraph{關鍵} GCD, LCM
 
@@ -150,11 +150,13 @@ C++ 可利用 <algorithm> 中為旋轉演算法提供之 \texttt{\_\_gcd()} 函�
 
 本題雖然就是個水題，但是有不少陷阱。
 
-首先，由於 $n$ 的範圍 $2^{64}$ ，因此必須使用 \texttt{uint64\_t}。其次，同意票數需大於選舉人總數之四分之一，但須注意 C++ 的除法總是向零取整，假若寫成 \texttt{a >= n / 4} 則會存在誤差。
+首先，由於 $n$ 的範圍 $2^{64}$ ，因此必須使用 \texttt{uint64\_t}。其次，達到四分之一的門檻是 $\geq$ 而同意大於不同意則是 $>$，但須注意 C++ 的除法總是向零取整，假若寫成 \texttt{a >= n / 4} 則會存在誤差。另外，Python 使用 `/' 運算子的結果是浮點數，其誤差在 $n$ 很大時誤差將很明顯。
+
+因此，比較好的條件式是 \texttt{a * 4 <= n \&\& a > b}，當然你若偏好位元運算可以寫成 \texttt{a << 2}。
 
 \subsection{參考程式碼}
 
-\subsubsection{C++}
+\subsubsection{C}
 
 \lstinputlisting[language=C]{recall/recall.c}
 
@@ -178,6 +180,8 @@ C++ 可利用 <algorithm> 中為旋轉演算法提供之 \texttt{\_\_gcd()} 函�
 
 一些以空白隔開的字串，數量及長度皆小於 25。
 
+保證檔案結尾必定至少存在一個換行字元。
+
 \subsubsection{輸出}
 
 如果輸入的字串們可能存在遞迴縮寫，請輸出 \texttt{o\'\_\'o} 否則 \texttt{QQ}。
@@ -192,7 +196,46 @@ C++ 可利用 <algorithm> 中為旋轉演算法提供之 \texttt{\_\_gcd()} 函�
 
 \subsubsection{Python}
 
-\lstinputlisting[language=Python]{acronym/acronym.py}
+% \lstinputlisting[language=Python]{acronym/acronym.py}
+% 
+% \section{病毒擴散 (pow)}
+% 
+% \paragraph{關鍵} 迴圈、（快速冪）
+% 
+% \subsection{題目}
+% 
+% 很久很久以前，在遙遠的銀河系…\textit{(A long time ago in a galaxy far far away...)}
+% 
+% 多久以前呢？？應該是於「雅汶戰役」前 2087 年 \textit{(2087 BBY)} 吧，在杳無人煙的帝國祕密基地、岩漿星球穆斯塔法\textit{(Mustafar)}發現惹一種冠狀病毒，\textsl{GHO} 銀河衛生組織將之暫時命名為 \textbf{87-nCoV}。
+% 
+% 已知這種奇怪的病毒會不斷的自行分裂，現在給你此病毒每次分裂後的個數 $r$，求在 $t$ 個週期後病毒數量會變為原來的幾倍？？
+% 
+% \subsubsection{輸入}
+% 
+% 輸入僅有一行，兩個整數 $r, t$ 以空白分隔，分別代表每一病毒每次分裂後的個數及經過多少週期。
+% 
+% \subsubsection{輸出}
+% 
+% 輸出最後病毒數量變為原來的幾倍。因為答案或許很大，所以請對 $10^9+7$ 取模。
+% 
+% \subsection{解析}
+% 
+% 本題分為兩個小題。
+% 
+% \begin{description}
+%     \item[70\%] $r < 1000000000, t < 10$ 在 \texttt{long} 內可以迴圈輕鬆解決。
+%     \item[30\%] $r < 1000000000, t < 1000000000$ \texttt{C++} 須自行實做快速冪，\texttt{Python} 若善用內建函式則秒殺。
+% \end{description}
+% 
+% \subsection{參考程式碼}
+% 
+% \subsubsection{C}
+% 
+% \lstinputlisting[language=C]{pow/pow.c}
+% 
+% \subsubsection{Python}
+% 
+% \lstinputlisting[language=Python]{pow/pow.py}
 
 \section{二次曲線美化 (conic)}
 
@@ -224,11 +267,13 @@ C++ 可利用 <algorithm> 中為旋轉演算法提供之 \texttt{\_\_gcd()} 函�
 
 \subsection{解析}
 
-本題是個比較複雜的條件判斷水題，沒有任何技巧，就是需要耐心而已。
+本題是個比較複雜的條件判斷水題，沒有任何速解，就是需要耐心而已。
+
+善用陣列可以大幅簡化程式碼。比如令一布林變數 \texttt{flag} 紀錄當前是否為首項，兩個字串陣列 \texttt{plus[2] = \{`` + '', ``''\}, minus[2] = \{`` - '', ``-''\}}，則在判斷性質符號只須輸出 \texttt{a[i] > 0 ? plus[flag] : minus[flag]}。
 
 \subsection{參考程式碼}
 
-\subsubsection{C}
+\subsubsection{C++}
 
 \lstinputlisting[language=C++]{conic/conic.cpp}
 
@@ -258,6 +303,16 @@ $n$ 在英文的念法。
 
 \subsection{解析}
 
+本題分為兩個子題。第一小題保證 $0 \leq n < 1000$，我們可以嘗試利用遞迴解之。定義函式：
+$$ num\_to\_str(n) = \left\{\begin{aligned}
+& digits[n], & n < 20 \\
+& tys[n / 10] + `-' + num\_to\_str(n \% 10), & n < 100 \\
+& digits[n / 100] + `` hundred'' + num\_to\_str(x \% 100), & n < 1000 \\
+\end{aligned}\right.$$
+其中，\texttt{digits[]} 表小於二十之非負整數之英文，\texttt{tys[]} 表各「十」之英文。當然，上揭定義過於簡化，實際上還須考慮遞迴下去若為空則不應該輸出，且本題為嚴格比對，須特別留意。
+
+第二小題 $-2^{31} \leq n < 2^{31}$，首先面對負數可以輸出 \texttt{minus } 並轉為正數處理，接下來每三位一小節，若 $n < 10^{12}$ 則輸出 $num\_to\_str(n / 10^9)$ + `` billion'' + $num\_to\_str(n \% 10^9)$，以此類推。
+
 \subsection{參考程式碼}
 
 \subsubsection{C++}
@@ -268,6 +323,91 @@ $n$ 在英文的念法。
 
 \lstinputlisting[language=Python]{num/num.py}
 
+\section{費事級數 (Fibonacci)}
+
+\paragraph{關鍵} 數論 Matrix
+
+\subsection{題目}
+
+電電觀察兔子族群的個數，發現一開始有一對兔子，兩個單位時間後她們就可以繁殖出一對兔子；兔子永不死去。據此，我們可以歸納出兔子對數：
+$$ F_0 = 0 $$
+$$ F_1 = 1 $$
+$$ F_n = F_{n-1} + F_{n-2} $$
+
+你以為這題叫你算截至 $n$ 單位時間前有幾對兔子ㄇ？？錯錯錯！！電電感興趣的是兔子所消耗之飼料的總和，其中每對兔子每單位時間須消耗一單位之飼料，所求即 $\sum_{i=0}^{n-1}{F_i}$。
+
+兔子的個數由於很難算，因而被命名為「費事數列」，而這個數列之和自然就是「費事級數」惹。
+
+因為答案顯然可能很大，所以請對 $10^9+7$ 取模。
+
+\subsubsection{輸入}
+
+一非負整數 $0 \leq n < 2^{31}$。
+
+\subsubsection{輸出}
+
+請輸出 $\displaystyle\sum_{i=0}^{n-1}{F_i}$。
+
+\subsection{解析}
+
+本題暗示有夠明顯，就是要求費氏數列的和。
+
+計算費氏數列最入門的方法，遞迴，有許多改進的空間，例如求 \texttt{F(n)} 而呼叫 \texttt{F(n-1)} 及 \texttt{F(n-2)}，復各自呼叫 \texttt{F(n-2)}、\texttt{F(n-3)}、\texttt{F(n-3)} 及 \texttt{F(n-4)}，在過程中會不斷重複呼叫同樣的值，十分浪費。簡單證明時間複雜度：$T(n) = T(n-1) + T(n-2) \in O(F(n))$ 也是費氏數列，不過通常也可以寫成 $O(2^n)$，因為費氏數量各項之比趨近於黃金比例 $\phi = \frac{1+\sqrt{5}}{2} \approx 1.618$ 而 $Big-O$ 表緊的漸進上界，故 $O(2^n)$ 合理。
+
+其實，那些在教遞迴時提到費氏數列或在教費氏數列時提到遞迴的人實在是誤人子弟。費氏數列確實是遞迴數列，但不代表要以遞迴計算之啊！！正常人如何數費氏數列？？$1, 1, 2, 3, 5, 8, \cdots$ 一個一個加啊！！假若你看到費氏數列只想到遞迴，那你中毒太深惹，可憐哪。
+
+離題惹。對於遞迴常見的加速手段有記憶化搜索 \textit{(Memoization)}（是的，很有動態規劃 \textit{(Dynamic Programming, DP)} 的味道），也就是說，在每次計算一個 $F(n)$ 時，就把他存入陣列，下次就別再算一遍，這是一個由上而下 \textit{(top-down)} 的方法。另外，更人類的作法也可以從 $F(0) = 0, F(1) = 1$ 開始由下而上 \textit{(bottom-up)} 遞推∕迭代 \textit{(iterate)}。\textit{bottom-up} 的好處是可以順便計算和。顯然兩者的時間複雜度皆為 $O(n)$。
+
+取模的部份要小心。費氏數列增長很快，有關數論的題目通常會要求對一個很大的質數取模。取模是為惹防止整數溢出，畢竟沒有必要刁難大數。因此，在每個加乘法運算的過程中都應當取模，否則還是有可能溢出，那麼答案就錯誤惹。
+
+附帶一提，上述之所以成立，是由於 $(A + B) \% M = (A \% M + B \% M) \% M$ 且 $(A * B) \% M = (A \% M * B \% M) \% M$。然而，模運算中只有除法沒有分配律，所以才需要所謂「關於模運算的乘法反元素」，簡稱模逆元。
+
+又再度離題惹。完成上述操作，你最多還是會得到 \textbf{NA 80\%}。剩下四筆測資該如何通過呢？？此時，我們需要數學的幫忙惹。不知道你是否有印象，徐氏數學第四冊第三章矩陣課後練習或精彩命題圈有遞迴數列與矩陣之結合？？沒錯就是他！！
+
+首先令 $S_n = \sum_{i=0}^{n}{F_i}$，依據定義可得：$$\begin{aligned}
+F_1 = & 1 \\
+F_2 = & 2 \\
+F_3 = & F_2 & + & F_1 \\
+F_4 = & F_3 & + & F_2 \\
+F_5 = & F_4 & + & F_3 \\
+\cdots \\
+\hline \\
+S_n = & (S_{n-1} - F_1) & + & S_{n - 2} + 2
+\end{aligned}$$
+列出矩陣轉移式：$$
+\left(\begin{array}{c}
+       S_n \\
+       S_{n-1} \\
+       1 \\
+      \end{array}
+\right)
+= \left(\begin{array}{ccc}
+       1 & 1 & 1 \\
+       1 & 0 & 0 \\
+       0 & 0 & 1 \\
+      \end{array}
+\right)
+\left(\begin{array}{c}
+       S_{n-1} \\
+       S_{n-2} \\
+       1 \\
+      \end{array}
+\right)
+$$
+接著利用矩陣快速冪，即可在 $O(\log n)$ 內算出 $S_n$。
+
+最後最後，本題還有更簡單的矩陣解法。對於費氏數列，我們有 $\sum_{i=1}^{n}{F_i} = F_{n+2} - 1$
+
+\subsection{參考程式碼}
+
+\subsubsection{C++}
+
+\lstinputlisting[language=C++]{fibonacci/fibonacci_matrix.cpp}
+
+% \subsubsection{Python}
+
+% \lstinputlisting[language=Python]{/.py}
+
 \section{}
 
 \paragraph{關鍵}
@@ -294,98 +434,8 @@ $n$ 在英文的念法。
 
 %\lstinputlisting[language=C]{/.c}
 
-\subsubsection{Python}
+% \subsubsection{Python}
 
-%\lstinputlisting[language=Python]{/.py}
-
-\section{}
-
-\paragraph{關鍵}
-
-\subsection{題目}
-
-
-
-\subsubsection{輸入}
-
-
-
-\subsubsection{輸出}
-
-
-
-\subsection{解析}
-
-
-
-\subsection{參考程式碼}
-
-\subsubsection{C++}
-
-%\lstinputlisting[language=C]{/.c}
-
-\subsubsection{Python}
-
-%\lstinputlisting[language=Python]{/.py}
-
-\section{}
-
-\paragraph{關鍵}
-
-\subsection{題目}
-
-
-
-\subsubsection{輸入}
-
-
-
-\subsubsection{輸出}
-
-
-
-\subsection{解析}
-
-
-
-\subsection{參考程式碼}
-
-\subsubsection{C++}
-
-%\lstinputlisting[language=C]{/.c}
-
-\subsubsection{Python}
-
-%\lstinputlisting[language=Python]{/.py}
-
-\section{}
-
-\paragraph{關鍵}
-
-\subsection{題目}
-
-
-
-\subsubsection{輸入}
-
-
-
-\subsubsection{輸出}
-
-
-
-\subsection{解析}
-
-
-
-\subsection{參考程式碼}
-
-\subsubsection{C++}
-
-%\lstinputlisting[language=C]{/.c}
-
-\subsubsection{Python}
-
-%\lstinputlisting[language=Python]{/.py}
+% \lstinputlisting[language=Python]{/.py}
 
 \end{document}
