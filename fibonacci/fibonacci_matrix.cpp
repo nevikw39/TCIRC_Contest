@@ -32,7 +32,7 @@ struct matrix
                 y[i] = (y[i] + a[i][j] * x[j] % M) % M;
         return move(y);
     }
-    matrix power(int n) const
+    matrix power(T n) const
     {
         matrix y, x = *this;
         for (int i = 0; i < N; i++)
@@ -54,6 +54,6 @@ int main()
     int n;
     cin >> n;
     matrix<> base{1, 1, 1, 0};
-    cout << (base.power(n + 2) * array<int64_t, 2>{0, 1})[0] - 1 << '\n';
+    cout << (base.power(n + 2UL) * array<int64_t, 2>{0, 1})[0] - 1 << '\n';
     return 0;
 }
