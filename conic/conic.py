@@ -10,14 +10,14 @@ def main():
     for i in range(5):
         if a[i]:
             sys.stdout.buffer.write(((plus[flag] if a[i] > 0 else minus[flag]) +
-                                     f"{abs(a[i]) if abs(a[i]) > 1 else ''}" + symbols[i]).encode())
+                                     (str(abs(a[i])) if abs(a[i]) > 1 else '') + symbols[i]).encode())
             flag = True
     if a[5]:
         if flag:
             sys.stdout.buffer.write(
                 ((" + %d" if a[5] > 0 else " - %d") % abs(a[5])).encode())
         else:
-            sys.stdout.buffer.write(f"{a[5]}".encode())
+            sys.stdout.buffer.write(str(a[5]).encode())
     elif not flag:
         sys.stdout.buffer.write('0'.encode())
 
