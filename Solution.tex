@@ -352,9 +352,13 @@ $$ F_n = F_{n-1} + F_{n-2} $$
 
 本題暗示有夠明顯，就是要求費氏數列的和。
 
+\subsubsection{遞迴：$O(2^n)$ Bad!!}
+
 計算費氏數列最入門的方法，遞迴，有許多改進的空間，例如求 \texttt{F(n)} 而呼叫 \texttt{F(n-1)} 及 \texttt{F(n-2)}，復各自呼叫 \texttt{F(n-2)}、\texttt{F(n-3)}、\texttt{F(n-3)} 及 \texttt{F(n-4)}，在過程中會不斷重複呼叫同樣的值，十分浪費。簡單證明時間複雜度：$T(n) = T(n-1) + T(n-2) \in O(F(n))$ 也是費氏數列，不過通常也可以寫成 $O(2^n)$，因為費氏數量各項之比趨近於黃金比例 $\phi = \frac{1+\sqrt{5}}{2} \approx 1.618$ 而 $Big-O$ 表緊的漸進上界，故 $O(2^n)$ 合理。
 
 其實，那些在教遞迴時提到費氏數列或在教費氏數列時提到遞迴的人實在是誤人子弟。費氏數列確實是遞迴數列，但不代表要以遞迴計算之啊！！正常人如何數費氏數列？？$1, 1, 2, 3, 5, 8, \cdots$ 一個一個加啊！！假若你看到費氏數列只想到遞迴，那你中毒太深惹，可憐哪。
+
+\subsubsection{遞推：$O(n)$}
 
 離題惹。對於遞迴常見的加速手段有記憶化搜索 \textit{(Memoization)}（是的，很有動態規劃 \textit{(Dynamic Programming, DP)} 的味道），也就是說，在每次計算一個 $F(n)$ 時，就把他存入陣列，下次就別再算一遍，這是一個由上而下 \textit{(top-down)} 的方法。另外，更人類的作法也可以從 $F(0) = 0, F(1) = 1$ 開始由下而上 \textit{(bottom-up)} 遞推∕迭代 \textit{(iterate)}。\textit{bottom-up} 的好處是可以順便計算和。顯然兩者的時間複雜度皆為 $O(n)$。
 
@@ -362,17 +366,20 @@ $$ F_n = F_{n-1} + F_{n-2} $$
 
 附帶一提，上述之所以成立，是由於 $(A + B) \% M = (A \% M + B \% M) \% M$ 且 $(A * B) \% M = (A \% M * B \% M) \% M$。然而，模運算中只有除法沒有分配律，所以才需要所謂「關於模運算的乘法反元素」，簡稱模逆元。
 
+\subsubsection{矩陣：$O(\log n)$}
+
 又再度離題惹。完成上述操作，你最多還是會得到 \textbf{NA 80\%}。剩下四筆測資該如何通過呢？？此時，我們需要數學的幫忙惹。不知道你是否有印象，徐氏數學第四冊第三章矩陣課後練習或精彩命題圈有遞迴數列與矩陣之結合？？沒錯就是他！！
 
 首先令 $S_n = \sum_{i=0}^{n}{F_i}$，依據定義可得：$$\begin{aligned}
-& F_1 = & 1 \\
-& F_2 = & 2 \\
-& F_3 = & F_2 & + & F_1 \\
-& F_4 = & F_3 & + & F_2 \\
-& F_5 = & F_4 & + & F_3 \\
-+) & \cdots \\
+& F_1 = & 1 \enspace\qquad \\
+& F_2 = & 2 \enspace\qquad \\
+& F_3 = & F_2 \enspace\qquad & + & F_1 \\
+& F_4 = & F_3 \enspace\qquad & + & F_2 \\
+& F_5 = & F_4 \enspace\qquad & + & F_3 \\
+& \enspace\vdots & \vdots\quad\qquad & & \vdots\enspace \\
++) \quad & F_n = & F_{n-1} \qquad & + & F_{n-2} \\
 \hline \\
-& S_n = & (S_{n-1} - F_1) & + & S_{n - 2} + 2
+& S_n = & (S_{n-1} - F_1) & + & S_{n - 2} & + 2
 \end{aligned}$$
 列出矩陣轉移式：$$
 \left(\begin{array}{c}
@@ -396,7 +403,11 @@ $$ F_n = F_{n-1} + F_{n-2} $$
 $$
 接著利用矩陣快速冪，即可在 $O(\log n)$ 內算出 $S_n$。
 
-最後最後，本題還有更簡單的矩陣解法。對於費氏數列，我們有 $\sum_{i=1}^{n}{F_i} = F_{n+2} - 1$。
+最後最後，本題還有更簡單的矩陣解法。對於費氏數列，我們有此性質：$\displaystyle\sum_{i=1}^{n}{F_i} = F_{n+2} - 1$。也就是說，二階矩陣快速冪求 $F_{n+2}-1$ 即可。
+
+費氏數列實在太漂亮惹，還有好多好多性質可以玩呢。
+
+https://blog.yangjerry.tw/2019/01/31/fibonacci-is-bigO1/
 
 \subsection{參考程式碼}
 
@@ -408,31 +419,37 @@ $$
 
 % \lstinputlisting[language=Python]{/.py}
 
-\section{}
+\section{摯友圈圈}
 
-\paragraph{關鍵}
+\paragraph{關鍵} Graph DFS
 
 \subsection{題目}
 
+如果有一群人兩兩之間都是摯友，那麼我們稱他們是一個摯友圈圈。
 
+現在有編號 $0 ~ N-1$ 的 $N$ 個人，以及他們之間的摯友關係，請輸出最大摯友圈圈的人數。
 
 \subsubsection{輸入}
 
+第一行有兩個整數 $N, M (0 < N \leq 22, 0 \leq M < 69)$ ，分別代表有 $N$ 個人和 $M$ 筆摯友關係。
 
+接下來有 $M$ 行，每行有兩個整數 $a, b (0 ≤ a, b ≤ N)$ 表示 $a$ 和 $b$ 互為摯友。
 
 \subsubsection{輸出}
 
-
+最大摯友圈圈的人數。
 
 \subsection{解析}
 
+簡單的 \textbf{DFS} 問題，從每一點開始暴搜即可。
 
+\textbf{BFS} 應該也行。
 
 \subsection{參考程式碼}
 
 \subsubsection{C++}
 
-%\lstinputlisting[language=C]{/.c}
+\lstinputlisting[language=C++]{group/group.cpp}
 
 % \subsubsection{Python}
 
